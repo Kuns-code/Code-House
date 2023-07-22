@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客详情页</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/blog_detail.css">
+
+     <!-- 引入 jquery -->
+     <script src="js/jquery.min.js"></script>
+     <!-- 引入 editor.md 依赖 -->
+     <link rel="stylesheet" href="editor.md/css/editormd.min.css" />
+     <script src="editor.md/lib/marked.min.js"></script>
+     <script src="editor.md/lib/prettify.min.js"></script>
+     <script src="editor.md/editormd.js"></script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav">
+        <img src="img/c.png" alt="">
+        <div class="title">我的博客系统</div>
+        <div class="spacer"></div>
+        <a href="blog_list.html">主页</a>
+        <a href="blog_edit.html">写博客</a>
+        <a href="logout">注销</a>
+    </div>
+    <!-- 页面的主体部分 -->
+    <div class="container">
+        <div class="container-left">
+            <div class="card">
+                <img src="img/111.jpg" alt="">
+                <h3>离开</h3>
+                <a href="" >gitee地址</a>
+                <div class="counter">
+                    <span>文章</span>
+                    <span>分类</span>
+                </div>
+                <div class="counter">
+                    <span>2</span>
+                    <span>1</span>
+                </div>
+            </div>
+        </div>
+        <!-- 右侧信息 -->
+            <div class="container-right"> 
+                <!-- 博客标题 -->
+                <h3></h3>
+                <!-- 博客发布时间 -->
+                <div class="date"></div>
+                <!-- 博客正文 此处为了配合 editormd 进行格式转换，此处务必改成 id -->
+                <div id="content" style="opacity: 60%;">
+                    
+                </div>
+            </div>
+        </div>
+
+<script>
+    function getBlog() {
+            $.ajax({
+                type: 'get',
+                url: 'blog' + location.search,
+                success: function(body) {
+                    // 设置博客的标题
+                    let h3 = document.querySelector('.container-right h3');
+                    h3.innerHTML = body.title;
+                    console.log(body.title);
+                    // 设置发布时间
+                    let dateDiv = document.querySelector('.container-right .date');
+                    dateDiv.innerHTML = body.postTime;
+                    // 设置正文. 正文内容应该是 markdown 格式的数据. 
+                    // 此处要显示的应该是渲染过的 markdown 的内容, 而不是 markdown 的原始字符串. 
+                    // 第一个参数, 是一个 html 元素的 id, 接下来渲染的结果会放到对应的 元素中. 
+                    editormd.markdownToHTML('content', {markdown: body.content});
+                }
+            });
+        }
+
+        getBlog();
+
+        function checkLogin() {
+            $.ajax({
+                type: 'get',
+                url: 'login',
+                success: function(body) {
+                    if (body.userId && body.userId > 0) {
+                        // 登录成功!!
+                        console.log("当前用户已经登录!!");
+                    } else {
+                        // 当前未登录
+                        // 强制跳转到登录页. 
+                        location.assign('login.html');
+                    }
+                }
+            });
+        }
+
+        checkLogin();
+
+      
+        function getAuthor() {
+            $.ajax({
+                type: 'get',
+                url: 'author' + location.search,
+                success: function(body) {
+                     console.log(body);
+                    // 把 username 设置到界面上
+                    let h3 = document.querySelector('.card h3');
+                    h3.innerHTML = body.username;
+                }
+            });
+        }
+
+        // 函数调用
+        getAuthor();
+
+</script>
+       
+</body>
+</html>

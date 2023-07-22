@@ -1,0 +1,19 @@
+
+.container-right h3{
+    text-align: center;
+    font-size: 22px;
+    font-weight: 900;
+    padding: 20px 0;
+
+}
+
+.container-right .date{
+    text-align: center;
+    font-size: 15px;
+    padding: 10px 0;
+    color: rgb(6, 156, 6);
+}
+.container-right .content p{
+    text-indent: 2em;
+    margin-bottom: 10px;
+}

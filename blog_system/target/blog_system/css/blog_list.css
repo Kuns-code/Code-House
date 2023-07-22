@@ -1,0 +1,37 @@
+.blog{
+    padding: 20px;
+}
+
+.blog .title{
+    font-size: 22px;
+    text-align: center;
+    font-weight: 900;
+}
+.blog .date{
+    padding: 15px 0;
+    color: rgb(6, 156, 6);
+    text-align: center;
+}
+.blog .desc{
+    text-indent: 2em;
+}
+.blog a{
+    /* 改成块级元素 */
+    display: block;
+    border: 2px solid black;
+    width: 130px;
+    height: 40px;
+    color: black;
+    text-decoration: none;
+    /* 文字的行高和元素高度一样高时，文字恰好是垂直居中的 */
+    line-height: 40px;
+    margin: 10px auto;
+    text-align: center;
+    /*  */
+    transition: all 0.8s;
+}
+
+.blog a:hover{
+    background-color: rgb(6, 143, 207);
+    color: white;
+}
